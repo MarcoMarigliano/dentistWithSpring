@@ -102,7 +102,21 @@ public class AppointmentService {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	public Appointment editAppointment(long id,Appointment newAppointment) {
+		
+		if(newAppointment.getDate().getDay()==6||newAppointment.getDate().getDay()==0)
+		    return null;
+		
+		if(newAppointment.getDate().getHours()-2==13)
+			return  null;
+			
+		if(newAppointment.getDate().getHours()-2<9||newAppointment.getDate().getHours()-2>=18)
+			return null;
+
+		if(newAppointment.getDate().getMinutes()!=0 && newAppointment.getDate().getMinutes()!=30)
+			return null;
+		
 		for (int i = 0; i<appointmentRepository.findAll().size(); i++) {
 			if(appointmentRepository.findAll().get(i).getId()==id) {
 				if(this.addAppointment(newAppointment)) {
